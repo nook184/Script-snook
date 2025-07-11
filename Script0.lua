@@ -24,7 +24,7 @@ if data.hwid == hwid and data.key and #data.key > 3 then
 
 	-- โหลด Script ทันที
 
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/nook184/Script-snook/main/Script.lua"))()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/nook184/Script-snook/refs/heads/main/Script.lua"))()
 
 	return
 
@@ -186,7 +186,7 @@ wait(1)
 
 ScreenGui:Destroy()
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/nook184/Script-snook/main/Script.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/nook184/Script-snook/refs/heads/main/Script.lua"))()
 
 elseif response == "valid" then  
 
@@ -198,7 +198,7 @@ elseif response == "valid" then
 
 	ScreenGui:Destroy()  
 
-	loadstring(game:HttpGet("https://raw.githubusercontent.com/nook184/Script-snook/main/Script.lua"))()  
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/nook184/Script-snook/refs/heads/main/Script.lua"))()  
 
 elseif response == "hwid_mismatch" then  
 
