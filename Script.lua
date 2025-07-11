@@ -250,11 +250,11 @@ Mode = "Get"
 pcall(function()
 ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("GetFunction"):InvokeServer(unpack(questArgs))
 end)
-wait(1)
+wait(0.3)
 
 step += 1
 updateStatus("✅ เสร็จสิ้นระบบอัตโนมัติ!", step, totalSteps)
-wait(3)
+wait(1)
 fadeOutAndDestroy(gui)
 
 end)()
