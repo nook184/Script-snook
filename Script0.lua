@@ -14,7 +14,7 @@ local apiUrl = "https://delicate-poetry-6e33.nestv3324.workers.dev/"
 
 local savedKeyFile = "key_data.json"
 
--- ถ้ามีคีย์ที่เคยผ่านอยู่ในไฟล์ → ข้ามไปโหลด script ทันที
+
 
 if isfile(savedKeyFile) then
 
@@ -22,7 +22,7 @@ local data = HttpService:JSONDecode(readfile(savedKeyFile))
 
 if data.hwid == hwid and data.key and #data.key > 3 then
 
-	-- โหลด Script ทันที
+	
 
 	loadstring(game:HttpGet("https://raw.githubusercontent.com/nook184/Script-snook/main/Script.lua"))()
 
@@ -32,7 +32,7 @@ end
 
 end
 
--- GUI
+
 
 local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
 
@@ -128,7 +128,7 @@ local UICorner3 = Instance.new("UICorner", Button)
 
 UICorner3.CornerRadius = UDim.new(0, 6)
 
--- ✅ ฟังก์ชันตรวจสอบคีย์
+
 
 local function CheckKey(key)
 
@@ -168,7 +168,7 @@ Status.TextColor3 = Color3.fromRGB(100, 255, 100)
 
 
 
--- ✅ บันทึกคีย์ลงไฟล์
+
 
 writefile(savedKeyFile, HttpService:JSONEncode({
 
@@ -222,7 +222,7 @@ end
 
 end
 
--- กดปุ่ม → ตรวจสอบคีย์
+
 
 Button.MouseButton1Click:Connect(function()
 
