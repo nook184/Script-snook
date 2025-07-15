@@ -185,81 +185,148 @@ wait(1.5)
 guiElement:Destroy()
 end
 
+-- (ต่อจาก GUI และฟังก์ชันอื่น ๆ)
+
 -- 🚀 เริ่มทำงานอัตโนมัติทันที
 coroutine.wrap(function()
-wait(0.2)
-fadeInGUI()
+	wait(0.2)
+	fadeInGUI()
 
-local step = 0
-local codes = {
-"VERYHIGHLIKEB",
-"ONEEIGHTYFIVELIKES",
-"FORTYFIVELIKES",
-"somanylikes",
-"AFIRSTTIME3001",
-"FREENIMBUSMOUNT",
-"LIKEF5",
-"UPD1",
-"THANKYOUFORSUPPORT",
-"THREEHUNDREDTHOUSANDPLAYERS",
-"FOLLOWS10KBREAD"
-}
-local totalSteps = 6 + #codes
+	local step = 0
+	local codes = {
+		"VERYHIGHLIKEB", "ONEEIGHTYFIVELIKES", "FORTYFIVELIKES", "somanylikes",
+		"AFIRSTTIME3001", "FREENIMBUSMOUNT", "LIKEF5", "UPD1",
+		"THANKYOUFORSUPPORT", "THREEHUNDREDTHOUSANDPLAYERS", "FOLLOWS10KBREAD"
+	}
+	local totalSteps = 6 + #codes + 5  -- +5 สำหรับรับเควสและสุ่มครั้งสุดท้าย
 
-for _, code in ipairs(codes) do
-step += 1
-updateStatus("🎟️ ใช้โค้ด: " .. code, step, totalSteps)
-local args = {{
-Type = "Code",
-Mode = "Redeem",
-Code = code
-}}
-pcall(function()
-ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("GetFunction"):InvokeServer(unpack(args))
-end)
-wait(0.2)
-end
+	for _, code in ipairs(codes) do
+		step += 1
+		updateStatus("🎟️ ใช้โค้ด: " .. code, step, totalSteps)
+		local args = {{
+			Type = "Code",
+			Mode = "Redeem",
+			Code = code
+		}}
+		pcall(function()
+			ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("GetFunction"):InvokeServer(unpack(args))
+		end)
+		wait(0.2)
+	end
 
-step += 1
-updateStatus("📍 วาร์ปไปจุด Summon...", step, totalSteps)
-local pos = Vector3.new(-227.189, 249.454, 382.306)
-local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
-if hrp then hrp.CFrame = CFrame.new(pos) end
-wait(2)
+	step += 1
+	updateStatus("📍 วาร์ปไปจุด Summon...", step, totalSteps)
+	local pos = Vector3.new(-227.189, 249.454, 382.306)
+	local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+	if hrp then hrp.CFrame = CFrame.new(pos) end
+	wait(2)
 
-for i = 1, 2 do
-step += 1
-updateStatus("✨ Summon รอบที่ " .. i, step, totalSteps)
-local summonArgs = {{
-Type = "Gacha",
-Auto = {
-T3 = false, S4 = false, T4 = false, S5 = false,
-N3 = false, N5 = false, N4 = false, S3 = false, T5 = false
-},
-Mode = "Purchase",
-Bundle = true,
-Index = "StandardSummon2"
-}}
-pcall(function()
-ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("GetFunction"):InvokeServer(unpack(summonArgs))
-end)
-wait(1)
-end
+	-- 🔁 สุ่ม 3 ครั้ง
+	for i = 1, 3 do
+		step += 1
+		updateStatus("✨ Summon รอบที่ " .. i, step, totalSteps)
+		local summonArgs = {{
+			Type = "Gacha",
+			Auto = {
+				T3 = false, S4 = false, T4 = false, S5 = false,
+				N3 = false, N5 = false, N4 = false, S3 = false, T5 = false
+			},
+			Mode = "Purchase",
+			Bundle = true,
+			Index = "StandardSummon2"
+		}}
+		pcall(function()
+			ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("GetFunction"):InvokeServer(unpack(summonArgs))
+		end)
+		wait(1)
+	end
 
-step += 1
-updateStatus("📜 โหลดเควส...", step, totalSteps)
-local questArgs = {{
-Type = "Quest",
-Mode = "Get"
-}}
-pcall(function()
-ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("GetFunction"):InvokeServer(unpack(questArgs))
-end)
-wait(0.2)
+	-- 📜 โหลดเควส
+	step += 1
+	updateStatus("📜 โหลดเควส...", step, totalSteps)
+	pcall(function()
+		local args = {{
+			Mode = "Get",
+			Type = "Quest"
+		}}
+		ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("GetFunction"):InvokeServer(unpack(args))
+	end)
+	wait(0.2)
 
-step += 1
-updateStatus("✅ เสร็จสิ้นระบบอัตโนมัติ!", step, totalSteps)
-wait(0.5)
-fadeOutAndDestroy(gui)
+	-- 🎯 รับเควสทั้งหมด
+	step += 1
+	updateStatus("🎯 รับเควส Summoning - Daily", step, totalSteps)
+	pcall(function()
+		local args = {{
+			Key = "Summoning",
+			Type = "Quest",
+			Index = "Daily",
+			Mode = "Claim"
+		}}
+		ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("GetFunction"):InvokeServer(unpack(args))
+	end)
+	wait(0.2)
 
+	step += 1
+	updateStatus("🎯 รับเควส Summoning - Weekly", step, totalSteps)
+	pcall(function()
+		local args = {{
+			Key = "Summoning",
+			Type = "Quest",
+			Index = "Weekly",
+			Mode = "Claim"
+		}}
+		ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("GetFunction"):InvokeServer(unpack(args))
+	end)
+	wait(0.2)
+
+	step += 1
+	updateStatus("🎯 รับเควส Free - Daily", step, totalSteps)
+	pcall(function()
+		local args = {{
+			Key = "Free",
+			Type = "Quest",
+			Index = "Daily",
+			Mode = "Claim"
+		}}
+		ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("GetFunction"):InvokeServer(unpack(args))
+	end)
+	wait(0.2)
+
+	step += 1
+	updateStatus("🎯 รับเควส Summoning - Daily", step, totalSteps)
+	pcall(function()
+		local args = {{
+			Key = "Summoning",
+			Type = "Quest",
+			Index = "Daily",
+			Mode = "Claim"
+		}}
+		ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("GetFunction"):InvokeServer(unpack(args))
+	end)
+	wait(0.2)
+
+	-- 🔁 สุ่มครั้งสุดท้ายหลังรับเควส
+	step += 1
+	updateStatus("✨ Summon รอบที่ 4 (หลังรับเควส)", step, totalSteps)
+	local summonArgs = {{
+		Type = "Gacha",
+		Auto = {
+			T3 = false, S4 = false, T4 = false, S5 = false,
+			N3 = false, N5 = false, N4 = false, S3 = false, T5 = false
+		},
+		Mode = "Purchase",
+		Bundle = true,
+		Index = "StandardSummon2"
+	}}
+	pcall(function()
+		ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("GetFunction"):InvokeServer(unpack(summonArgs))
+	end)
+	wait(1)
+
+	-- ✅ เสร็จสิ้น
+	step += 1
+	updateStatus("✅ เสร็จสิ้นระบบอัตโนมัติ!", step, totalSteps)
+	wait(0.5)
+	fadeOutAndDestroy(gui)
 end)()
